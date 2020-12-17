@@ -1,0 +1,58 @@
+#!/usr/bin/env python3
+
+import sys
+from os.path import dirname, basename, isfile, join
+
+if sys.path[0] != "/usr/bin":
+    ## Development mode from git repository
+    sys.path.insert(0, sys.path[0] + "/../")
+
+import support_diagnostics
+import support_diagnostics.output
+
+# System header
+info = "{script} version: {version}".format(script=__file__.split('/')[-1],version=support_diagnostics.Version.version)
+print(support_diagnostics.Colors.format("{header}{padding}".format(header=info,padding=" " * (support_diagnostics.output.ReportOutput.columns - len(info))), support_diagnostics.Colors.BLACK_FOREGROUND, support_diagnostics.Colors.GREY_BACKGROUND))
+print()
+
+#support_diagnostics.Update.check()
+
+if support_diagnostics.Configuration.platform is None:
+    print("Cannot determine platform")
+    sys.exit(1)
+
+support_diagnostics.ImportModules.import_all(globals(), "collectors")
+support_diagnostics.ImportModules.import_all(globals(), "analyzers")
+
+def main():
+    """
+    main()
+    """
+    collectors = {}
+    collector_results = {}
+    analyzer_results = {}
+    analyzer_classes = [cls for cls in support_diagnostics.Analyzer.__subclasses__()]
+    analyzer_classes.sort(key=lambda cls: cls.order)
+    print("Collecting & analyzing...", end='', flush=True)
+    for analyzer_class in analyzer_classes:
+        if "all" in Configuration.get_settings()['categories'] or len(list(set(Configuration.get_settings()['categories']) & set(analyzer_class.categories))) > 0 :
+            if analyzer_class.collector is not None and analyzer_class.collector not in collectors:
+                # Create collector, collect, store results
+                print(".", end='', flush=True)
+                collector = analyzer_class.collector()
+                collectors[analyzer_class.collector] = collector
+                collector_results[analyzer_class.collector] = collector.collect()
+
+            if analyzer_class not in analyzer_results:
+                print(".", end='', flush=True)
+                analyzer = analyzer_class()
+                analyzer_results[analyzer_class] = analyzer.analyze(collector_results[analyzer_class.collector])
+    print("completed")
+            
+
+    # Generate report
+    outputs = [cls for cls in support_diagnostics.output.Output.__subclasses__() if cls.__name__.lower().startswith(support_diagnostics.Configuration.settings['output']) ]
+    report = outputs[0]()
+    report.generate(analyzer_results)
+
+main()
