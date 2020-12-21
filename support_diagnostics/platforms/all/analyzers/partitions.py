@@ -86,6 +86,14 @@ class PartitionsAnalyzer(Analyzer):
                         result = copy.deepcopy(PartitionsAnalyzer.results['non-critical'])
                         format_fields['percent_used'] = '-'
                         format_fields['mount'] = '-'
+                    elif collector_result.output[partition]['type'] in ["unknown", "cdrom", "usb"]:
+                        # Partiton exists, not mounted
+                        result = copy.deepcopy(PartitionsAnalyzer.results['near-critical'])
+                        result.results['summary'] = 'not mounted'
+                    elif collector_result.output[partition]['type'] in ["vfat"]:
+                        # Partiton exists, mounted, but non-typical
+                        result = copy.deepcopy(PartitionsAnalyzer.results['near-critical'])
+                        result.results['summary'] = 'non-typical type'
                     elif percent_used is None:
                         result = copy.deepcopy(PartitionsAnalyzer.results['near-critical'])
                         result.results['summary'] = ''
