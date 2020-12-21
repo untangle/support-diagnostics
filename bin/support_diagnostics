@@ -15,7 +15,7 @@ info = "{script} version: {version}".format(script=__file__.split('/')[-1],versi
 print(support_diagnostics.Colors.format("{header}{padding}".format(header=info,padding=" " * (support_diagnostics.output.ReportOutput.columns - len(info))), support_diagnostics.Colors.BLACK_FOREGROUND, support_diagnostics.Colors.GREY_BACKGROUND))
 print()
 
-#support_diagnostics.Update.check()
+support_diagnostics.Update.check()
 
 if support_diagnostics.Configuration.platform is None:
     print("Cannot determine platform")

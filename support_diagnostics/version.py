@@ -1,2 +1,2 @@
 class Version():
-    version=".2"
+    version=".3"
