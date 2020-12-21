@@ -27,7 +27,7 @@ class Update():
             if Update.download() is True and Update.install():
                 print("Updated - re-run command")
                 sys.exit(1)
-        print()
+            print()
         
     @classmethod
     def download(cls):
