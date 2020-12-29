@@ -8,7 +8,7 @@ class MailLogCollector(Collector):
     id = "mail_log"
 
     """
-    Get apt sources
+    Get mail log entries
     """
     def collect(self):
         results = []
