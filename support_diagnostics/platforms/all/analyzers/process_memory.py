@@ -11,13 +11,14 @@ import support_diagnostics.utilities
 
 ImportModules.import_all(globals(), "collectors")
 
-class MemoryAnalyzer(Analyzer):
+class ProcessMemoryAnalyzer(Analyzer):
     """
     Analyze memory usage
     """
     order = 0
     
-    heading = "Process Memory Usage"
+    max_records = 10
+    heading = "Top 10 Process Memory Usage"
     categories = ["os"]
     collector = ProcessesCollector
 
@@ -25,7 +26,7 @@ class MemoryAnalyzer(Analyzer):
         results = []
 
         memory_sorted_process_results = sorted(filter(lambda r: r.source == "process" and 'vmrss' in r.output['status'], collector_results), key=lambda d: d.output['status']['vmrss'], reverse=True)
-        for process_result in memory_sorted_process_results[:10]:
+        for process_result in memory_sorted_process_results[:ProcessMemoryAnalyzer.max_records]:
             result = AnalyzerResult(severity=AnalyzerResultSeverityPass,other_results={ "{severity}" : '{cmdline:<55} {size}'})
             cmdline_len = len(process_result.output['cmdline'])
             format_fields = {
