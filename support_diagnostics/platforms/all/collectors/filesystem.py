@@ -5,25 +5,6 @@ import os
 
 from support_diagnostics import Collector,CollectorResult
 import support_diagnostics
-
-## !!! move to utils
-def human_to_byte(size):
-    """
-    Convert a human readable value like 20G to 21474836480
-    """
-    result = 0
-    size_name = ("B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB")
-    match = re.search('([\d+\.]+)\s*(.+)', size)
-    if match is not None:
-        number = float(match.group(1))
-        unit = match.group(2).upper()
-        if not unit.endswith('B'):
-            unit = unit + 'B'
-        if unit in size_name:
-            factor = 1024 ** size_name.index(unit)
-            result = number * factor
-    return int(result)
-
 class FilesystemCollector(Collector):
 
     platform_entries = {
