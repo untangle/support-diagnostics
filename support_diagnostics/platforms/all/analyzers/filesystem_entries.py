@@ -2,29 +2,20 @@ import copy
 import os
 import re
 
-# from urllib.parse import urlparse
 import urllib.parse
 
 from support_diagnostics import Analyzer, AnalyzerResult, AnalyzerResultSeverityPass, AnalyzerResultSeverityWarn, AnalyzerResultSeverityFail
 from support_diagnostics import Configuration, ImportModules
+import support_diagnostics.utilities
 
 ImportModules.import_all(globals(), "collectors")
-
-## !!! library
-def byte_to_human(size, decimal_places=2):
-    for unit in [ 'B', 'KB', 'MB', 'GB', 'TB', 'PB']:
-        if size < 1024.0 or unit == 'PB':
-            break
-        size /= 1024.0
-    return f"{size:.{decimal_places}f} {unit}"
-
 class FilesystemEntriesAnalyzer(Analyzer):
     """
     Analyze file system entries for size.
     """
     order = 0
     
-    heading = "File/Directory Usage"
+    heading = "Top File/Directory Usage"
     categories = ["os"]
     collector = FilesystemCollector
 
@@ -39,7 +30,7 @@ class FilesystemEntriesAnalyzer(Analyzer):
                     result = AnalyzerResult(severity=AnalyzerResultSeverityPass,other_results={ "{severity}" : '{type:<12}{entry:<20} {size}'})
                     format_fields = {
                         'entry': entry,
-                        'size': byte_to_human(collector_result.output[entry])
+                        'size': support_diagnostics.utilities.SizeConversion.to_human(collector_result.output[entry])
                     }
                     if os.path.isfile(entry):
                         format_fields['type'] = "file";
