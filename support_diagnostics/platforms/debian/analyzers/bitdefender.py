@@ -13,10 +13,7 @@ class BitdefenderAnalyzer(Analyzer):
     categories = ["mail","virus"]
     collector = BitdefenderLogCollector
 
-    # spam_result_re = re.compile('spamd: result: ([^\s]+) ([^\s]+) - ([^\s]+)')
-    # ERROR: The anti-malware database update failed, error Unknown error (FFFFF448).
     update_error_result_re = re.compile('ERROR: The anti-malware database update failed, error Unknown error \((.+)\)')
-    # spam_test_time_limit_exceeded = "TIME_LIMIT_EXCEEDED"
 
     heading = "BitDefender Log"
     results = {
