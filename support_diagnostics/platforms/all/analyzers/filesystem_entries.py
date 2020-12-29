@@ -20,7 +20,7 @@ def byte_to_human(size, decimal_places=2):
 
 class FilesystemEntriesAnalyzer(Analyzer):
     """
-    Get apt sources
+    Analyze file system entries for size.
     """
     order = 0
     
