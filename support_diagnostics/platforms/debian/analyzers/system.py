@@ -16,7 +16,7 @@ class SystemAnalyzer(Analyzer):
     order = 0
     
     heading = "System Information"
-    categories = ["updates"]
+    categories = ["os"]
     collector = SystemCollector
 
     results = {
@@ -59,12 +59,12 @@ class SystemAnalyzer(Analyzer):
 
                 result = None
                 if system_arch == "x86_64":
-                    arch = "64 bit"
+                    arch = "64 bit x86"
                     result = AnalyzerResult(other_results=arch_result_fields)
                 else:
                     result = self.results['unsupported_arch']
                     if "86" in system_arch:
-                        arch = "32 bit"
+                        arch = "32 bit x86"
                     elif "arm" in system_arch:
                         arch = "ARM"
                 
