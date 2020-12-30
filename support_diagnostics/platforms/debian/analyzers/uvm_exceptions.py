@@ -32,7 +32,13 @@ class UvmExceptionsAnalyzer(Analyzer):
         "exception": AnalyzerResult(
                 severity=AnalyzerResultSeverityFail,
                 summary="untangle-vm exception detected",
-                detail="The following exception was fouund:\n\t\t{path} at line {line_number}\n\t\tthe following exception was encountered {instances} times:\n\t\t{last_error}",
+                # detail="The following exception was fouund:\n\t\t{path} at line {line_number}\n\t\tthe following exception was encountered {instances} times:\n\t\t{last_error}",
+                detail=[
+                    'The following exception was found:',
+                    '{path} at line {line_number}',
+                    'the following exception was encountered {instances} times:'
+                    '{last_error}'
+                ],
                 recommendation="Send this information to Untangle engineering"
         )
     }

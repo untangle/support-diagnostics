@@ -41,7 +41,12 @@ class UpdateSourceAnalyzer(Analyzer):
                 severity=AnalyzerResultSeverityFail,
                 summary="Pointing to unknown server '{host}'",
                 detail="No customer or corporate units should be pointing to an unknown package server",
-                recommendation="From file:\n\t\t{collector_result_source}:\n\t\tdelete entry:\n\t\t{entry}"
+                recommendation=[
+                    'From file:',
+                    '{collector_result_source}:',
+                    'delete entry:',
+                    '{entry}'
+                ]
         )
     }
 

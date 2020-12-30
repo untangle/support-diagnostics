@@ -26,7 +26,11 @@ class BitdefenderAnalyzer(Analyzer):
         "update_error": AnalyzerResult(
                 severity=AnalyzerResultSeverityFail,
                 summary="BitDefender update errors detected",
-                detail="The update error code {update_error_code} was detected {total} times.  \n\t\tMany of these may indicate the following issues:\n\t\t* A web proxy is in front of the system and preventing updates from occuring properly.",
+                detail=[
+                    'The update error code {update_error_code} was detected {total} times.',
+                    'Many of these may indicate the following issues:',
+                    'A web proxy is in front of the system and preventing updates from occuring properly.'
+                ],
                 recommendation="Perform a tcpdump with -A to the host bd.untangle.com to watch for traffic and look for possibility of web proxy."
         )
     }

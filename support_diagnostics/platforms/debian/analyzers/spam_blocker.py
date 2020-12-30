@@ -27,7 +27,10 @@ class SpamBlockerAnalyzer(Analyzer):
         "timeout": AnalyzerResult(
                 severity=AnalyzerResultSeverityWarn,
                 summary="Spam processing timeouts detected",
-                detail="{timeouts} msgs (of {total} msgs) matched TIME_LIMIT_EXCEEDED result.  \n\t\tThis may point to a DNS resolver that limits queries which can cause incomplete spam analysis.",
+                detail=[
+                    '{timeouts} msgs (of {total} msgs) matched TIME_LIMIT_EXCEEDED result.',
+                    'This may point to a DNS resolver that limits queries which can cause incomplete spam analysis.'
+                ],
                 recommendation="Consider changing WAN resolver to a public resolver like 8.8.8.8"
         )
     }
