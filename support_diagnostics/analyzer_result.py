@@ -71,10 +71,15 @@ class AnalyzerResult:
 
         for field in self.results:
             if self.results[field] is not None:
-                value = self.results[field]
+                ## Process as list.
+                messages = self.results[field]
                 del self.results[field]
                 field = field.format(**format_attributes)
-                self.results[field] = value.format(**format_attributes)
+                if type(messages) is not list:
+                    messages = [messages]
+                for index, message in enumerate(messages):
+                    messages[index] = message.format(**format_attributes)
+                self.results[field] = messages
         
 
     # @property
