@@ -24,9 +24,7 @@ class ProcessesCollector(Collector):
         results = []
         # Get CPU usage information
         proc = subprocess.Popen(['top','-bn1'], stdout=subprocess.PIPE)
-        # pid_column = None
-        # cpu_column = None
-        # pid_cpu_map = {}
+
         pid_top = {}
         column_names = None
         while True:
@@ -53,9 +51,6 @@ class ProcessesCollector(Collector):
                     value = value[:-1]
                 top[key] = value
             pid_top[fields[0]] = top
-            # result = CollectorResult(self, 'process_top')
-            # result.output = top
-            # results.append(result)
 
         # Get procsss-specific information
         for process_id in glob.glob("/proc/*"):
