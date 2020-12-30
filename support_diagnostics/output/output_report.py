@@ -30,7 +30,7 @@ class ReportOutput(Output):
                             print(''.join(severity))
 
                     if 'summary' in analyzer_result.results:
-                        if ''.join(analyzer_result.results['summary']) not in ''.join(flat_messages):
+                        if ''.join(analyzer_result.results['summary']) not in ''.join({k: ''.join(v) for k, v in analyzer_result.results.items() if not k.startswith('summary')}.values()):
                             header = "Summary"
                             for message in analyzer_result.results['summary']:
                                 print(support_diagnostics.Colors.format("{header:<16}{result}".format(header=header, result=message)))
