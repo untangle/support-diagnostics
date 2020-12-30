@@ -14,7 +14,13 @@ class UpdateSourceAnalyzer(Analyzer):
     Get apt sources
     """
     categories = ["updates"]
-    collector = AptSourcesCollector
+    collector = {
+            'collector': FilesCollector,
+            'arguments': {
+                'id': 'apt_sources',
+                'path': ['/etc/apt/*.list', '/etc/apt/sources.list.d/*.list']
+            }
+    }
 
     deb_re = re.compile('^(?P<type>deb[^\s]*)\s+(\[.+\]\s+|)(?P<url>[^\s+]+)\s+(?P<distribution>[^\s+]+)(.*)')
 

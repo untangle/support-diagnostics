@@ -8,10 +8,16 @@ ImportModules.import_all(globals(), "collectors")
 
 class SpamBlockerAnalyzer(Analyzer):
     # """
-    # Get apt sources
+    # Analyze spam logs
     # """
     categories = ["mail"]
-    collector = MailLogCollector
+    collector = {
+            'collector': FilesCollector,
+            'arguments': {
+                'id': 'mail_log',
+                'path': '/var/log/mail.*'
+            }
+    }
 
     spam_result_re = re.compile('spamd: result: ([^\s]+) ([^\s]+) - ([^\s]+)')
     spam_test_time_limit_exceeded = "TIME_LIMIT_EXCEEDED"

@@ -11,7 +11,14 @@ class UvmExceptionsAnalyzer(Analyzer):
     # Process uvm logs for exceptions
     # """
     categories = ["uvm"]
-    collector = UvmLogCollector
+    collector = {
+            'collector': FilesCollector,
+            'arguments': {
+                'id': 'uvm_log',
+                'path': '/var/log/uvm/*',
+                'ignore': 'packages.log'
+            }
+    }
 
     exception_begin_re = re.compile('\[([^]]+)\] <> ([^\s]+)\s+Exception in ([^\s]+)')
     exception_any_re = re.compile('((com\.|java.*\.|org\.).+)')

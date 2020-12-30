@@ -8,10 +8,16 @@ ImportModules.import_all(globals(), "collectors")
 
 class BitdefenderAnalyzer(Analyzer):
     # """
-    # Get BitDefender logs
+    # Analyze BitDefender logs
     # """
     categories = ["mail","virus"]
-    collector = BitdefenderLogCollector
+    collector = {
+            'collector': FilesCollector,
+            'arguments': {
+                'id': 'bitdefender_log',
+                'path': '/var/log/bdamserver.*'
+            }
+    }
 
     update_error_result_re = re.compile('ERROR: The anti-malware database update failed, error Unknown error \((.+)\)')
 
