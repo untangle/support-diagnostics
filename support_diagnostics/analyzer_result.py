@@ -15,15 +15,24 @@ class AnalyzerResult:
         self.results = {}
 
         if summary is not None:
+            if type(summary) is not list:
+                summary = [summary]
             self.results['summary'] = summary
         if detail is not None:
+            if type(detail) is not list:
+                detail = [detail]
             self.results['detail'] = detail
         if recommendation is not None:
+            if type(recommendation) is not list:
+                recommendation = [recommendation]
             self.results['recommendation'] = recommendation
 
         if other_results is not None:
             for key in other_results:
-                self.results[key] = other_results[key]
+                value = other_results[key]
+                if type(value) is not list:
+                    value = [value]
+                self.results[key] = value
 
     @property
     def collector_result(self):
