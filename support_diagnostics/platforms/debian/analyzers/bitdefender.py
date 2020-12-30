@@ -1,4 +1,3 @@
-import copy
 import re
 
 from support_diagnostics import Analyzer, AnalyzerResult, AnalyzerResultSeverityPass, AnalyzerResultSeverityWarn, AnalyzerResultSeverityFail
@@ -54,7 +53,7 @@ class BitdefenderAnalyzer(Analyzer):
         update_error_code_keys = update_error_codes.keys()
         if len(update_error_code_keys) > 0:
             for key in update_error_code_keys:
-                result = copy.deepcopy(BitdefenderAnalyzer.results["update_error"])
+                result = BitdefenderAnalyzer.results["update_error"].copy()
                 result.collector_result = collector_result
                 result.analyzer = self
                 result.format({

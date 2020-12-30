@@ -1,4 +1,3 @@
-import copy
 import re
 
 from support_diagnostics import Analyzer, AnalyzerResult, AnalyzerResultSeverityPass, AnalyzerResultSeverityWarn, AnalyzerResultSeverityFail
@@ -29,17 +28,27 @@ class UvmExceptionsAnalyzer(Analyzer):
 
     heading = "untangle-vm exceptions"
     results = {
-        "exception": AnalyzerResult(
+        "unknown_exception": AnalyzerResult(
                 severity=AnalyzerResultSeverityFail,
-                summary="untangle-vm exception detected",
-                # detail="The following exception was fouund:\n\t\t{path} at line {line_number}\n\t\tthe following exception was encountered {instances} times:\n\t\t{last_error}",
+                summary="untangle-vm unknown exception detected",
                 detail=[
                     'The following exception was found:',
                     '{path} at line {line_number}',
                     'the following exception was encountered {instances} times:'
                     '{last_error}'
                 ],
-                recommendation="Send this information to Untangle engineering"
+                recommendation="Send this information to Untangle engineering."
+        ),
+        "known_exception": AnalyzerResult(
+                severity=AnalyzerResultSeverityWarn,
+                summary="untangle-vm known exception detected",
+                detail=[
+                    'The following exception was found:',
+                    '{path} at line {line_number}',
+                    'the following exception was encountered {instances} times:',
+                    '{last_error}'
+                ],
+                recommendation="Untangle engineering is likely aware of this but should review."
         )
     }
 
@@ -61,19 +70,27 @@ class UvmExceptionsAnalyzer(Analyzer):
                 if match is not None:
                     # We've found an uncaught exception.
                     exception = {
-                        'last_error': None
+                        'last_error': None,
+                        'result': UvmExceptionsAnalyzer.results["unknown_exception"]
                     }
                     last_line = line
                     continue
 
-                if UvmExceptionsAnalyzer.general_exception in line or \
-                    UvmExceptionsAnalyzer.null_pointer_exception in line:
-                    # Either a caught and thrown exception or something 
-                    # like a null pointer that we want to know about.
-                    exception = {
-                        'last_error': None
-                    }
-                    # DON'T continue; use this as our last_error
+                if exception is None:
+                    if UvmExceptionsAnalyzer.null_pointer_exception in line:
+                        # We want to know about null pointer exceptions.
+                        exception = {
+                            'last_error': None,
+                            'result': UvmExceptionsAnalyzer.results["unknown_exception"]
+                        }
+                        # DON'T continue; use this as our last_error
+                    elif UvmExceptionsAnalyzer.general_exception in line:
+                        # A caught exception.  Not as severe.
+                        exception = {
+                            'last_error': None,
+                            'result': UvmExceptionsAnalyzer.results["known_exception"]
+                        }
+                        # DON'T continue; use this as our last_error
 
                 if exception is not None:
                     if exception['last_error'] is None:
@@ -103,7 +120,7 @@ class UvmExceptionsAnalyzer(Analyzer):
         # Sort by instances, reverse order.  Unlike other stats, we want all of these!
         for exception in sorted(exceptions.values(), key=lambda d: d['instances'], reverse=True):
             key = exception['path_key']
-            result = copy.deepcopy(UvmExceptionsAnalyzer.results["exception"])
+            result = exception['result'].copy()
             result.collector_result = collector_result
             result.analyzer = self
             result.format(exceptions[key])

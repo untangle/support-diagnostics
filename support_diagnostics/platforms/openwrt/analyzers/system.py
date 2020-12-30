@@ -1,8 +1,4 @@
-import copy
 import re
-
-# from urllib.parse import urlparse
-import urllib.parse
 
 from support_diagnostics import Analyzer, AnalyzerResult, AnalyzerResultSeverityPass, AnalyzerResultSeverityWarn, AnalyzerResultSeverityFail
 from support_diagnostics import Configuration, ImportModules
@@ -62,7 +58,7 @@ class SystemAnalyzer(Analyzer):
                     arch = "64 bit x86"
                     result = AnalyzerResult(other_results=arch_result_fields)
                 else:
-                    result = self.results['unsupported_arch']
+                    result = self.results['unsupported_arch'].copy()
                     if "86" in system_arch:
                         arch = "32 bit x86"
                     elif "arm" in system_arch:

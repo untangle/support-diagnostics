@@ -1,8 +1,4 @@
-import copy
 import re
-
-# from urllib.parse import urlparse
-import urllib.parse
 
 from support_diagnostics import Analyzer, AnalyzerResult, AnalyzerResultSeverityPass, AnalyzerResultSeverityWarn, AnalyzerResultSeverityFail
 from support_diagnostics import Configuration, ImportModules
@@ -50,13 +46,13 @@ class CloudDatabaseAnalyzer(Analyzer):
                     data_results[reason]['instances'] = data_results[reason]['instances'] + 1
                                         
         for key in data_results:
-            result = copy.deepcopy(CloudDatabaseAnalyzer.results[key])
+            result = CloudDatabaseAnalyzer.results[key].copy()
             result.analyzer = self
             result.format(data_results[key])
             results.append(result)
 
         if len(results) == 0:
-            result = copy.deepcopy(CloudDatabaseAnalyzer.results["pass"])
+            result = CloudDatabaseAnalyzer.results["pass"].copy()
             result.analyzer = self
             results.append(result)
 

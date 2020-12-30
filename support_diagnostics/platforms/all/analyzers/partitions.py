@@ -1,4 +1,3 @@
-import copy
 import re
 
 import urllib.parse
@@ -73,27 +72,27 @@ class PartitionsAnalyzer(Analyzer):
                         format_fields['type'] = collector_result.output[partition]['type']
                 
                     if collector_result.output[partition]['type'] == 'swap':
-                        result = copy.deepcopy(PartitionsAnalyzer.results['non-critical'])
+                        result = PartitionsAnalyzer.results['non-critical'].copy()
                         format_fields['percent_used'] = '-'
                         format_fields['mount'] = '-'
                     elif collector_result.output[partition]['type'] in ["unknown", "cdrom", "usb"]:
                         # Partiton exists, not mounted
-                        result = copy.deepcopy(PartitionsAnalyzer.results['near-critical'])
+                        result = PartitionsAnalyzer.results['near-critical'].copy()
                         result.results['summary'] = 'not mounted'
                     elif collector_result.output[partition]['type'] in ["vfat"]:
                         # Partiton exists, mounted, but non-typical
-                        result = copy.deepcopy(PartitionsAnalyzer.results['near-critical'])
+                        result = PartitionsAnalyzer.results['near-critical'].copy()
                         result.results['summary'] = 'non-typical type'
                     elif percent_used is None:
-                        result = copy.deepcopy(PartitionsAnalyzer.results['near-critical'])
+                        result = PartitionsAnalyzer.results['near-critical'].copy()
                         result.results['summary'] = ''
                     elif percent_used >= 95:
-                        result = copy.deepcopy(PartitionsAnalyzer.results['critical'])
+                        result = PartitionsAnalyzer.results['critical'].copy()
                     # elif percent_used > 80 or percent_used is None:
                     elif percent_used >= 85 or percent_used is None:
-                        result = copy.deepcopy(PartitionsAnalyzer.results['near-critical'])
+                        result = PartitionsAnalyzer.results['near-critical'].copy()
                     else:
-                        result = copy.deepcopy(PartitionsAnalyzer.results['non-critical'])
+                        result = PartitionsAnalyzer.results['non-critical'].copy()
 
                     result.collector_result = collector_result
                     result.analyzer = self

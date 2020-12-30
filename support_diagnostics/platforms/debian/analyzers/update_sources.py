@@ -1,7 +1,5 @@
-import copy
 import re
 
-# from urllib.parse import urlparse
 import urllib.parse
 
 from support_diagnostics import Analyzer, AnalyzerResult, AnalyzerResultSeverityPass, AnalyzerResultSeverityWarn, AnalyzerResultSeverityFail
@@ -11,7 +9,7 @@ ImportModules.import_all(globals(), "collectors")
 
 class UpdateSourceAnalyzer(Analyzer):
     """
-    Get apt sources
+    Analyze apt sources
     """
     categories = ["updates"]
     collector = {
@@ -65,11 +63,11 @@ class UpdateSourceAnalyzer(Analyzer):
 
                     result = None
                     if parsed_url.hostname == 'updates.untangle.com':
-                        result = copy.deepcopy(UpdateSourceAnalyzer.results["public"])
+                        result = UpdateSourceAnalyzer.results["public"].copy()
                     elif parsed_url.hostname == 'package-server.untangle.int':
-                        result = copy.deepcopy(UpdateSourceAnalyzer.results["internal"])
+                        result = UpdateSourceAnalyzer.results["internal"].copy()
                     else:
-                        result = copy.deepcopy(UpdateSourceAnalyzer.results["unknown"])
+                        result = UpdateSourceAnalyzer.results["unknown"].copy()
                     
                     result.collector_result = collector_result
                     result.analyzer = self

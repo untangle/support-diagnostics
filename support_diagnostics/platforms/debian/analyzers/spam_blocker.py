@@ -1,4 +1,3 @@
-import copy
 import re
 
 from support_diagnostics import Analyzer, AnalyzerResult, AnalyzerResultSeverityPass, AnalyzerResultSeverityWarn, AnalyzerResultSeverityFail
@@ -50,7 +49,7 @@ class SpamBlockerAnalyzer(Analyzer):
                         timeouts = timeouts + 1
 
         if timeouts > 0:
-            result = copy.deepcopy(SpamBlockerAnalyzer.results["timeout"])
+            result = SpamBlockerAnalyzer.results["timeout"].copy()
             result.collector_result = collector_result
             result.analyzer = self
             result.format({

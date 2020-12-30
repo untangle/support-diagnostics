@@ -1,9 +1,5 @@
-import copy
 import os
 import re
-
-# from urllib.parse import urlparse
-import urllib.parse
 
 from support_diagnostics import Analyzer, AnalyzerResult, AnalyzerResultSeverityPass, AnalyzerResultSeverityWarn, AnalyzerResultSeverityFail
 from support_diagnostics import Configuration, ImportModules
