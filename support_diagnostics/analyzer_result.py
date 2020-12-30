@@ -1,3 +1,5 @@
+import copy
+
 import support_diagnostics
 
 class AnalyzerResult:
@@ -69,7 +71,7 @@ class AnalyzerResult:
 
         # Add result messages
         for message_type in self.results:
-            format_attributes[message_type] = self.results[message_type]
+            format_attributes[message_type] = ''.join(self.results[message_type])
 
         if self.collector_result is not None:
             for k in self.collector_result.__dict__:
@@ -89,19 +91,9 @@ class AnalyzerResult:
                 for index, message in enumerate(messages):
                     messages[index] = message.format(**format_attributes)
                 self.results[field] = messages
-        
 
-    # @property
-    # def analysis(self):
-    #     """
-    #     Analyzer results
-    #     """
-    #     return self._analysis
-
-    # @analyzer.setter
-    # def analysis(self,analyzer):
-    #     """
-    #     Set analyzer
-    #     """
-    #     self._analysis = analyzer
-
+    def copy(self):
+        """
+        Return a copy of ourself
+        """
+        return copy.deepcopy(self)
