@@ -4,7 +4,11 @@ from os.path import dirname, basename, isfile, join
 from support_diagnostics import Collector,CollectorResult
 
 class SystemCollector(Collector):
+    hostname_file_name = "/proc/sys/kernel/hostname"
     version_file_name = "/usr/share/untangle/lib/untangle-libuvm-api/VERSION"
+    uid_file_name = "/usr/share/untangle/conf/uid"
+    serial_number_file_name = "/sys/devices/virtual/dmi/id/product_serial"
+    appliance_model_file_name = "/usr/share/untangle/conf/appliance-model"
 
     """
     Get NGFW system information
@@ -12,9 +16,38 @@ class SystemCollector(Collector):
     def collect(self):
         results = []
 
+        # Hostname
+        result = CollectorResult(self, "hostname")
+        file = open(SystemCollector.hostname_file_name, "r")
+        result.output = [line.rstrip() for line in file.readlines()]
+        file.close()
+        results.append(result)
+
         # Product version
         result = CollectorResult(self, "version")
         file = open(SystemCollector.version_file_name, "r")
+        result.output = [line.rstrip() for line in file.readlines()]
+        file.close()
+        results.append(result)
+
+        # Appliance model
+        if isfile(SystemCollector.appliance_model_file_name):
+            result = CollectorResult(self, "model")
+            file = open(SystemCollector.appliance_model_file_name, "r")
+            result.output = [line.rstrip() for line in file.readlines()]
+            file.close()
+            results.append(result)
+
+        # Uid
+        result = CollectorResult(self, "uid")
+        file = open(SystemCollector.uid_file_name, "r")
+        result.output = [line.rstrip() for line in file.readlines()]
+        file.close()
+        results.append(result)
+
+        # Serial
+        result = CollectorResult(self, "serial")
+        file = open(SystemCollector.serial_number_file_name, "r")
         result.output = [line.rstrip() for line in file.readlines()]
         file.close()
         results.append(result)

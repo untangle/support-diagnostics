@@ -12,7 +12,7 @@ class SystemAnalyzer(Analyzer):
     order = 0
     
     heading = "System Information"
-    categories = ["os"]
+    categories = ["system"]
     collector = SystemCollector
 
     results = {
@@ -33,11 +33,11 @@ class SystemAnalyzer(Analyzer):
         format_fields = {}
         severity=None
         for collector_result in collector_results:
-            if collector_result.source == "version":
+            if collector_result.source in ["hostname", 'version', 'uid', 'serial', 'model']:
                 result_fields = {
-                    'version': '{version}'
+                    collector_result.source: '{{{source}}}'.format(source=collector_result.source)
                 }
-                format_fields['version'] = collector_result.output[0]
+                format_fields[collector_result.source] = collector_result.output[0]
 
                 result = AnalyzerResult(severity=severity, other_results=result_fields)
                 result.collector_result = collector_result
