@@ -36,7 +36,7 @@ def main():
     print("Collecting & analyzing...", end='', flush=True)
     for analyzer_class in analyzer_classes:
         # Only process if 'all' is categories list or specific category matches what's in analyzer's list.
-        if "all" in Configuration.get_settings()['categories'] or len(list(set(Configuration.get_settings()['categories']) and set(analyzer_class.categories))) > 0 :
+        if "all" in Configuration.get_settings()['categories'] or len(list(set(Configuration.get_settings()['categories']) & set(analyzer_class.categories))) > 0 :
             # Build collector results.
             # Multiple analyzers can call the same collector, so cache results instead of calling
             # collector over and over again.
