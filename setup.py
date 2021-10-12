@@ -17,8 +17,8 @@ if isdir("../.git") or isdir(".git"): # debian source tarballs don't contain .gi
     if len(items) == 3:
         version = '{}+{}'.format(items[0], items[2][1:])
     print("--> PEP-0440 version will be {}".format(version))
-    with open('support_diagnostics/version.py', 'w') as f:
-        f.write('__version__ = "{}"\n'.format(version))
+#    with open('support_diagnostics/version.py', 'w') as f:
+#        f.write('__version__ = "{}"\n'.format(version))
 else:
     version = "undefined"
 
