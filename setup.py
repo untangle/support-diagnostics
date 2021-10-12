@@ -27,7 +27,7 @@ if {'pytest', 'test', 'ptr'}.intersection(sys.argv):
 else:
     pytestRunner = []
 
-setup(name='support-dignostics',
+setup(name='support-diagnostics',
       version=version,
       description='Support Diagnostics.',
       long_description='''Analyze live Untangle system and produce report.''',
