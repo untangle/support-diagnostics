@@ -1,5 +1,5 @@
 class Collector:
-    id = None
+    id = "unknown"
 
     """
     Gather information

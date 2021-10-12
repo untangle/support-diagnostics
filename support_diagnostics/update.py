@@ -12,8 +12,7 @@ class Update():
     checked = False
     chunk_size = 1024 * 1024
     check_interval = 86400
-    # url = "https://download.untangle.com/support_diagnostics.tgz"
-    url = "http://192.168.25.51/support_diagnostics.tgz"
+    url = "https://download.untangle.com/support_diagnostics.tgz"
     download_file_path = "support_diagnostics.tgz"
 
     @classmethod

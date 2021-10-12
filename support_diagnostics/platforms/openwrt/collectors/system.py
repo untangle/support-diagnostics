@@ -4,6 +4,8 @@ from os.path import dirname, basename, isfile, join
 from support_diagnostics import Collector,CollectorResult
 
 class SystemCollector(Collector):
+    id = "system"
+
     os_release_file_name = "/etc/os-release"
     version_key = "VERSION"
     uid_file_name = "/etc/config/uid"
