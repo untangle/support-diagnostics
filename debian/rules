@@ -1,6 +1,7 @@
 #!/usr/bin/make -f
 
 export PYBUILD_NAME=support-diagnostics
+export DH_ALWAYS_EXCLUDE=.coverage
 
 %:
 	dh $@ --with python3 --buildsystem=pybuild
