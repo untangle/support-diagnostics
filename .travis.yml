@@ -1,0 +1,39 @@
+sudo: required
+
+git:
+  depth: false
+
+services:
+- docker
+
+env:
+  global:
+    # DOCKER_PASSWORD
+    - secure: "A4GGqujWYPe9zK6OQX9+GQJ3/lnOLNMqMZv6by1Hra4Bm9eE6QBDs/NZLJvy//0Q7imHUB0vZkN/KATHPdFDIpCHbUMVSpOTXTcTLCQ0ASXsZMjBdsJx4nVvib9HtmUrgMuD5+oogFezVg6tZhnfmGqiJQ8uBLxqySmatJQqemD0Q60Xc694VlBOz45l3v2QI667FHe8a1S3cGT/KQEk0HzvQnx3t4zQPqz16ZNRvkPvHORD4SJ0p/kz1BQ1ji/chEIxiJFybB+vBJ4elwnHfdotu5yYbMlLJjqsU7Ci9IipZAeOWM+I4cqsAGUee+y+vYO0qUJ3UuKCBOMhpAEYO4AjqIZVoQKbOGoruG8Y8jY95WjwZppSKOzeLwEaQrmkOHR88P7HWhCUEKgp9+gt+wsUYdYTwmhB3pmOSXFHBUc2FDV4pF1Z0JJxv+vfleZA3zPWdz9GpHr2yL+9cubh8HUGf1t9kwvx4bMukuRZMqpI6Xowf+jd/93F3ayVW8Bi2rsZ9WT+Bl+TfpSCG7Sp6qXkd1F3YlrZFlC1ebaTjtiuNzziXgrpVUahCAcmqrv+YurpWVMtLB5om2l/IRVeRTESYBmINUF670LO89Or71ocVfO87e8qKGeO7eDzAKoxkyqPsRsl0LLSllAf+9vsbgYoFCCbAQnWR940SN+aZUc="
+    - DOCKER_USERNAME: untangleengineering
+      SSH_KEY: /tmp/travis-buildbot.rsa
+      PACKAGE_SERVER_IP: 50.211.244.129
+      REPOSITORY: buster
+      PKGTOOLS_COMMIT: origin/${TRAVIS_BRANCH}
+      UPLOAD: scp
+  jobs:
+    - ARCHITECTURE: amd64
+    - ARCHITECTURE: arm64
+
+before_install:
+- echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+- docker pull untangleinc/ngfw:${REPOSITORY}-build-multiarch
+- openssl aes-256-cbc -K $encrypted_c3a944c0ebdd_key -iv $encrypted_c3a944c0ebdd_iv -in .travis/buildbot.rsa.enc -out ${SSH_KEY} -d
+- chmod 600 ${SSH_KEY}
+
+script:
+- docker-compose -f docker-compose.build.yml run pkgtools
+- docker-compose -f docker-compose.build.yml run build
+
+notifications:
+  email: false
+  slack:
+    rooms:
+      - secure: "M3Axava0mJXpKS7WztgOZVqcospV4EN9holmSzw/Rtv3LOB7TGhdsxJwinZKl9OM+dTjqi3P1EsNwvAUpEOR9d74s0RQN/FHrM4t2i60yUXILr3oVxJSFIL+eiNGQ9zPCxVKRTmFSJYDwTXi1KhQFnrsub9gW1wiusRLSn/rG+3zduwHOCujv+1fTStjw32xe6gl+ybg1zcFVUbLh55XxopZrbGwdmxGC+mavPiDHjG2lQszXdw9WCLVcOKULAeICDLx/hs5sxwEFyqJMYykBrVSo2CriIcw+pEZWOiysk11jCRPYtQ2u72PctlcSlQJOE8neOQvJfy5xdvzSoh5o2IneQQlXpXu7zk8Oy2kQz4yXDMDQOS+FGMGqeXrMFMk5wAf6G32bUMDFv3C7wLHqlkmSrgxrHAgZpzpjx2pH1U6Bb/qLBwAW2vwULm+36XsUkAXlZ/WT9KWYkMHne1+1CsF5lZtcXdrx6r0s2lw7T6fvLap5MwJIXMAhws+MTORtHaTWEhJ+5Qv2DShM9ceagloee8pfk96/U4qRuqYqRpT2zKDhf6AWiZ6m7mLnq2ghjJ287xmWMOIHiDV7zVQXehAEks5g0h6Yen0yZnTNG1etV7xQQm3G3BASYbJA6uGE97TE4/Ki0UrP6+0sj7RQLctgbV3qy2IAQ43e0cgTbE="
+    on_success: change
+    on_failure: always
