@@ -3,7 +3,7 @@
 
 import sys
 
-from setuptools import setup
+from setuptools import setup, find_packages
 from subprocess import check_output
 from os.path import isdir
 
@@ -35,7 +35,8 @@ setup(name='support-diagnostics',
       author_email='cblaise@untangle.com',
       url='https://untangle.com',
       scripts=['bin/support_diagnostics'],
-      packages=['support_diagnostics'],
+#      packages=['support_diagnostics'],
+      packages=find_packages(include=("support_diagnostics*",)),
       install_requires=['urllib3'],
       license='GPL',
       setup_requires=pytestRunner,
