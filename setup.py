@@ -3,10 +3,9 @@
 
 import sys
 
-from setuptools import setup, find_packages
+from setuptools import setup, find_namespace_packages
 from subprocess import check_output
 from os.path import isdir
-
 
 if isdir("../.git") or isdir(".git"): # debian source tarballs don't contain .git
     version_cmd = "git describe --tags --always --long"
@@ -17,8 +16,6 @@ if isdir("../.git") or isdir(".git"): # debian source tarballs don't contain .gi
     if len(items) == 3:
         version = '{}+{}'.format(items[0], items[2][1:])
     print("--> PEP-0440 version will be {}".format(version))
-#    with open('support_diagnostics/version.py', 'w') as f:
-#        f.write('__version__ = "{}"\n'.format(version))
 else:
     version = "undefined"
 
@@ -35,8 +32,9 @@ setup(name='support-diagnostics',
       author_email='cblaise@untangle.com',
       url='https://untangle.com',
       scripts=['bin/support-diagnostics'],
-#      packages=['support_diagnostics'],
-      packages=find_packages(include=("support_diagnostics*",)),
+      packages=(
+          find_namespace_packages()
+      ),
       install_requires=['urllib3'],
       license='GPL',
       setup_requires=pytestRunner,

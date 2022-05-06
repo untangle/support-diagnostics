@@ -1,0 +1,60 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build support-diagnostics",
+            "type": "shell",
+            "command": "./.vscode/vsbuild.sh ${input:destination_ip}",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "type": "shell",
+            "label": "Run package builds",
+            "command": ".vscode/build.sh all yes",
+            "group": {
+              "kind": "build",
+              "isDefault": true
+            }
+          },
+          {
+            "type": "shell",
+            "label": "Upload package to docker container instance",
+            "command": ".vscode/upload-container.sh ${input:container_name} untangle-python3-support-diagnostics",
+            "group":{
+                "kind": "build",
+                "isDefault": true
+            },
+            "dependsOn": ["Run package builds"]
+        },
+        {
+            "type": "shell",
+            "label": "Upload package to ISO instance",
+            "command": ".vscode/upload.sh ${input:destination_ip} untangle-python3-support-diagnostics",
+            "group":{
+                "kind": "build",
+                "isDefault": true
+            },
+            "dependsOn": ["Run package builds"]
+        },
+        
+    ],
+    "inputs": [
+        {
+            "id": "destination_ip",
+            "type": "promptString",
+            "description": "IP Address to upload package to",
+            "default": "<ip address or list of addresses separated by commas>"
+        },
+        {
+            "id": "container_name",
+            "type": "promptString",
+            "description": "Container to upload and install package into",
+            "default": "<populate container name here in tasks.json>"
+        },
+    ]
+}
