@@ -85,7 +85,7 @@ class FilesystemCollector(Collector):
                         partitions[mount_point]['size'] = int(fields[2]) * 1024
 
         # Determine swap partition
-        proc = subprocess.Popen(['swapon', "-s"], stdout=subprocess.PIPE)
+        proc = subprocess.Popen(['swapon', "-s"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         while True:
             line = proc.stdout.readline()
             if not line:
@@ -97,7 +97,6 @@ class FilesystemCollector(Collector):
                 if mount_point in partitions:
                     partitions[mount_point]['match'] = 'swapon'
                     partitions[mount_point]['type'] = 'swap'
-
 
         ## Remove partitions that are "super-partitions" that are otherwise accounted for.
         deletes = []
