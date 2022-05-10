@@ -6,7 +6,7 @@ import sys
 import tarfile
 import time
 
-from support_diagnostics import Configuration
+from support_diagnostics import Configuration, Logger
 
 class Update():
     checked = False
@@ -39,37 +39,36 @@ class Update():
             request = urllib.request.Request(Update.url, method="HEAD")
             response = urllib.request.urlopen(request)
         except:
-            print(":".join([cls.__name__, sys._getframe().f_code.co_name, "Cannot open {url}".format(url=Update.url)]))
-            print(join( str(v) for v in sys.exc_info()))
+            Logger.message(f"Cannot open {url}")
             return False
 
         if response.status == 404:
-            print(":".join([cls.__name__, sys._getframe().f_code.co_name, "server returned 404 for {url}".format(url=Update.url)]))
+            Logger.message(f"server returned 404 for {url}")
             return False
 
         url_file_size = int(response.getheader("Content-length"))
         if url_file_size == 0:
-            print(":".join([cls.__name__, sys._getframe().f_code.co_name, "content length for {url} is 0".format(url=Update.url)]))
+            Logger.message(f"content length for {url} is 0")
             return False
 
         last_content_length = Configuration.get_settings()['updates']['last_content_length']
 
         if last_content_length == url_file_size:
             # if self.debug:
-                # print(":".join([cls.__name__, sys._getframe().f_code.co_name, "current and url sies are the same {size}".format(size=url_file_size)]))
+                # Logger.message(f"current and url sies are the same {url_file_size}")
             return False
 
         print("downloading...", end='', flush=True)
         try:
             url = urllib.request.urlopen(Update.url, timeout=5)
         except:
-            print(":".join([cls.__name__, sys._getframe().f_code.co_name, "can't open url {url}".format(url=url)]))
+            Logger.message(f"can't open url {url}")
             return False
 
         try:
             write_file = open(Update.download_file_path, 'wb')
         except:
-            print(":".join([cls.__name__, sys._getframe().f_code.co_name, "Cannot create local file {file_path}".format(file_path=Update.download_file_path)]))
+            Logger.message(f"Cannot create local file {Update.download_file_path}")
             return False
 
         url_bytes_read = 0
@@ -78,7 +77,7 @@ class Update():
             try:
                 data = url.read(Update.chunk_size)
             except:
-                print(":".join([cls.__name__, sys._getframe().f_code.co_name, "Cannot read content at {pos}".format(pos=url_bytes_read)]))
+                Logger.message(f"Cannot read content at {url_bytes_read}")
                 return False
 
             url_bytes_read += len(data)
@@ -86,7 +85,7 @@ class Update():
             try:
                 write_file.write(data)
             except:
-                print(":".join([cls.__name__, sys._getframe().f_code.co_name, "Cannot write content at {pos}".format(pos=url_bytes_read)]))
+                Logger.message(f"Cannot write content at {url_bytes_read}")
                 return False
 
         write_file.close()
@@ -106,14 +105,14 @@ class Update():
             tar.extractall(path=untar_target_path)
             tar.close()
         except:
-            print(":".join([cls.__name__, sys._getframe().f_code.co_name, "Cannot extract to {file_path}".format(file_path=untar_target_path)]))
+            Logger.message(f"Cannot extract to {untar_target_path}")
             sys.exit(1)
 
         try:
             command = "{path}/{directory}/{command}".format(path=untar_target_path,directory="support_diagnostics",command="install.sh")
             proc = subprocess.Popen([command])
         except:
-            print(":".join([cls.__name__, sys._getframe().f_code.co_name, "Cannot run command {command}".format(command=command)]))
+            Logger.message(f"Cannot run command {command}")
             sys.exit(1)
 
         return True
