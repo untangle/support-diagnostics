@@ -1,3 +1,5 @@
+from .logger import Logger
+
 from .configuration import Configuration
 from .update import Update
 
@@ -14,6 +16,8 @@ from .colors import Colors
 from .analyzer_result_severity_pass import AnalyzerResultSeverityPass
 from .analyzer_result_severity_warn import AnalyzerResultSeverityWarn
 from .analyzer_result_severity_fail import AnalyzerResultSeverityFail
+
+
 
 #from .output import Output
 #import output
