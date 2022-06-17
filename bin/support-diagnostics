@@ -85,7 +85,6 @@ def main():
                 analyzer_results[analyzer_class] = analyzer.analyze(collector_results)
     print("completed")
             
-
     # Generate report
     outputs = [cls for cls in support_diagnostics.output.Output.__subclasses__() if cls.__name__.lower().startswith(support_diagnostics.Configuration.settings['output']) ]
     report = outputs[0]()
