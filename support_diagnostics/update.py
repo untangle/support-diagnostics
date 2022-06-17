@@ -12,7 +12,7 @@ class Update():
     checked = False
     chunk_size = 1024 * 1024
     check_interval = 86400
-    url = "https://download.untangle.com/support_diagnostics.tgz"
+    url = "https://updates.untangle.com/support_diagnostics.tgz"
     download_file_path = "support_diagnostics.tgz"
 
     @classmethod
@@ -39,16 +39,16 @@ class Update():
             request = urllib.request.Request(Update.url, method="HEAD")
             response = urllib.request.urlopen(request)
         except:
-            Logger.message(f"Cannot open {url}")
+            Logger.message(f"Cannot open {Update.url}")
             return False
 
         if response.status == 404:
-            Logger.message(f"server returned 404 for {url}")
+            Logger.message(f"server returned 404 for {Update.url}")
             return False
 
         url_file_size = int(response.getheader("Content-length"))
         if url_file_size == 0:
-            Logger.message(f"content length for {url} is 0")
+            Logger.message(f"content length for {Update.url} is 0")
             return False
 
         last_content_length = Configuration.get_settings()['updates']['last_content_length']
@@ -62,7 +62,7 @@ class Update():
         try:
             url = urllib.request.urlopen(Update.url, timeout=5)
         except:
-            Logger.message(f"can't open url {url}")
+            Logger.message(f"can't open url {Update.url}")
             return False
 
         try:
