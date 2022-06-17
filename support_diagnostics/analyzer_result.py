@@ -10,7 +10,6 @@ class AnalyzerResult:
     def __init__(self, severity=None,summary=None,detail=None,recommendation=None,other_results=None):
         self._collector_result = None
         self._analyzer = None
-        # self.analysis = None
 
         self.severity = severity
 
@@ -65,6 +64,9 @@ class AnalyzerResult:
         self._analyzer = analyzer
 
     def format(self, data=None):
+        """
+        Apply format attributes to messages.
+        """
         format_attributes = {}
         if self.severity is not None:
             format_attributes['severity'] = support_diagnostics.Colors.format(self.severity.name, self.severity.foreground_color, self.severity.background_color)
@@ -74,8 +76,16 @@ class AnalyzerResult:
             format_attributes[message_type] = ''.join(self.results[message_type])
 
         if self.collector_result is not None:
-            for k in self.collector_result.__dict__:
-                format_attributes['collector_result_' + k] = self.collector_result.__dict__[k]
+            # Process list of message types
+            if type(self.collector_result) is list:
+                results = self.collector_result
+            else:
+                results = [self.collector_result]
+
+            for result in results:
+                for k in result.__dict__:
+                    format_attributes['collector_result_' + k] = result.__dict__[k]
+
         if data is not None:
             for k in data:
                 format_attributes[k] = data[k]
