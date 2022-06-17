@@ -13,6 +13,7 @@ from .analyzer_result import AnalyzerResult
 
 from .colors import Colors
 
+from .analyzer_result_severity_info import AnalyzerResultSeverityInfo
 from .analyzer_result_severity_pass import AnalyzerResultSeverityPass
 from .analyzer_result_severity_warn import AnalyzerResultSeverityWarn
 from .analyzer_result_severity_fail import AnalyzerResultSeverityFail
