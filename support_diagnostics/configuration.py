@@ -47,14 +47,11 @@ class Configuration():
         try:
             options, args = getopt.getopt(sys.argv[1:], 'h', ['categories=','output=','help'])
             for option,argument in options:
-                # print(option)
-                # print(argument)
                 handlers[option](argument)
 
-            # return args
         except getopt.GetoptError as exc:
             print(exc)
-            self.usage(None)
+            Configuration.usage()
             exit(1)
 
         Configuration.write()
@@ -90,7 +87,7 @@ class Configuration():
             json.dump(Configuration.settings, file, indent=4)
 
     @classmethod
-    def usage(cls):
+    def usage(cls, argument=None):
         """Print usage"""
         sys.stderr.write("""\
 {command} usage:
@@ -98,6 +95,7 @@ optional arguments:
     --categories=cat1,cat2[...]  :   Categories to analyze.  Default='all'
 
 """.format(command=sys.argv[0]))
+        sys.exit(1)
 
 if Configuration.platform is None:
     Configuration.static_init()
