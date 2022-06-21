@@ -43,9 +43,9 @@ class IpsecAnalyzer(Analyzer):
                 detail="Cannot find policies in ip xfrm policy",
                 recommendation=[
                     "Tunnel gateway address may not be reachable",
-                    "Local and/or Remote networks may be mismatches",
+                    "Local and/or Remote networks may be mismatched",
                     "Authentication may be mismatched",
-                    "Phase 1 ciphers may be mismatches"
+                    "Phase 1 ciphers may be mismatched"
                 ]
         ),
         "state": AnalyzerResult(
