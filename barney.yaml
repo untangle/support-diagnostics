@@ -3,7 +3,7 @@
 
 images:
 
-  support-diagnostics:
+  mfw_pkg/support-diagnostics:
     units:
     - floor: code.arista.io/mfw/build%toolchain
       sources:
@@ -23,5 +23,5 @@ images:
         cd /src/github.com/untangle/openwrt
         /src/code.arista.io/mfw/build/build.sh -f /src -t "package/feeds/packages/python3/host/compile package/feeds/mfw/support-diagnostics/compile"
         # copy resulting packages to destination image
-        mkdir -p /dest/mfw-packages
-        cp bin/packages/x86_64/*/* /dest/mfw-packages/
+        mkdir -p /dest/mfw-packages/support-diagnostics
+        cp bin/packages/x86_64/*/* /dest/mfw-packages/support-diagnostics
