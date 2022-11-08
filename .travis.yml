@@ -16,7 +16,6 @@ env:
       PKGTOOLS_COMMIT: origin/${TRAVIS_BRANCH}
       UPLOAD: scp
   jobs:
-    - REPOSITORY: buster
     - REPOSITORY: bullseye
 
 before_install:
