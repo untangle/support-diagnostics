@@ -33,7 +33,7 @@ setup(name='support-diagnostics',
       url='https://untangle.com',
       scripts=['bin/support-diagnostics'],
       packages=(
-          find_namespace_packages()
+          find_namespace_packages(exclude=["tests"])
       ),
       install_requires=['urllib3'],
       license='GPL',
