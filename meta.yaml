@@ -1,0 +1,10 @@
+reponame: github.com/untangle/support-diagnostics
+description: |
+  Tools for support to diagnose common problems with MFW & NGFW
+users:
+  maintainers:
+    - sdelafond@arista.com
+    - jsommerville@arista.com
+x-bar:
+  version: production
+epoch: 1
