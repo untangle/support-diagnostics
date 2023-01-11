@@ -25,3 +25,13 @@ images:
         # copy resulting packages to destination image
         mkdir -p /dest/mfw-packages/support-diagnostics
         cp bin/packages/x86_64/*/* /dest/mfw-packages/support-diagnostics
+        cp bin/targets/x86/64/packages/* /dest/mfw-packages/support-diagnostics
+
+  test/mfw_pkg/support-diagnostics:
+    units:
+    - image: code.arista.io/mfw/build%world
+    - image: .%mfw_pkg/support-diagnostics
+    finalizers:
+    - - sh
+      - -c
+      - mkdir /var/lock && opkg install --force-downgrade /mfw-packages/*/*
