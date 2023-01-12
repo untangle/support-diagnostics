@@ -1,0 +1,29 @@
+{
+  "": {
+    "commit": "6e717403dbabd22016c8d2487548199f213fc3a7"
+  },
+  "barney.ci/alpine": {
+    "commit": "a772f65dfe30a8b2c1bbbddde6832807d2045e1f"
+  },
+  "barney.ci/debian": {
+    "commit": "792f7fb4a7e0eb1a4ab585e927ee28c0cad04e55"
+  },
+  "barney.ci/docker": {
+    "commit": "12a3314c6ea80d957e7024ede64f2ff65066e0f6"
+  },
+  "barney.ci/golang": {
+    "commit": "fb96df7372c41bbc29bc59d1299bf91833bd4123"
+  },
+  "code.arista.io/mfw/build": {
+    "commit": "1b95cb62893089729122f5edc725a0380766a032"
+  },
+  "github.com/golang/go": {
+    "commit": "1e9ff255a130200fcc4ec5e911d28181fce947d5"
+  },
+  "github.com/untangle/mfw_feeds": {
+    "commit": "279b4a7fd505b6e9e6db2052b88d216bcc1d0957"
+  },
+  "github.com/untangle/openwrt": {
+    "commit": "145c3ec9301f33b38fbf1071223720c9acd764ac"
+  }
+}
