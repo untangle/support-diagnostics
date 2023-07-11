@@ -18,7 +18,7 @@
     "commit": "f4a134330ce47d8d1bbdb8408323e461aab3fcfd"
   },
   "github.com/golang/go": {
-    "commit": "e827d41c0a2ea392c117a790cdfed0022e419424"
+    "commit": "2c358ffe9762ba08c8db0196942395f97775e31b"
   },
   "github.com/untangle/mfw_feeds": {
     "commit": "d1a2d2cfd782c96402f67c58ec3b67addbcae07c"
