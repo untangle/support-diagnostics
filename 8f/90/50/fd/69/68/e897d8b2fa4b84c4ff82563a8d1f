@@ -1,6 +1,7 @@
 {
   "": {
-    "commit": "8f9050fd6968e897d8b2fa4b84c4ff82563a8d1f"
+    "commit": "8f9050fd6968e897d8b2fa4b84c4ff82563a8d1f",
+    "url": "https://github.com/untangle/support-diagnostics.git"
   },
   "barney.ci/alpine": {
     "commit": "8725c311a245c7aadc4174cd9d851f655c657492"
@@ -24,7 +25,7 @@
     "commit": "b32572b603d9fdc4545d63a5e025b81139fb3435"
   },
   "github.com/golang/go": {
-    "commit": "6885bad7dd86880be6929c02085e5c7a67ff2887"
+    "commit": "69234ded30614a471c35cef5d87b0e0d3c136cd9"
   },
   "github.com/untangle/mfw_feeds": {
     "commit": "0679d370a55ddffaf929934d36ad80c7455e63ce"
