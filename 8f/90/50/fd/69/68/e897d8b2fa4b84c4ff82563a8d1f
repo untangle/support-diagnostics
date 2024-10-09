@@ -1,7 +1,6 @@
 {
   "": {
-    "commit": "8f9050fd6968e897d8b2fa4b84c4ff82563a8d1f",
-    "url": "https://github.com/untangle/support-diagnostics.git"
+    "commit": "8f9050fd6968e897d8b2fa4b84c4ff82563a8d1f"
   },
   "barney.ci/alpine": {
     "commit": "f2fa545e3fafa3387f2d7269721d16f3f499cc3b"
@@ -28,7 +27,7 @@
     "commit": "ed07b321aef7632f956ce991dd10fdd7e1abd827"
   },
   "github.com/untangle/mfw_feeds": {
-    "commit": "0679d370a55ddffaf929934d36ad80c7455e63ce"
+    "commit": "834c8a5f14d2a8b73e971a6cc64aebbeca3aba50"
   },
   "github.com/untangle/openwrt": {
     "commit": "69cc038bb49439f1739124f7e01364edbf3466a6"
