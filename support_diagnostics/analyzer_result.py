@@ -90,7 +90,7 @@ class AnalyzerResult:
             for k in data:
                 format_attributes[k] = data[k]
 
-        for field in self.results:
+        for field in list(self.results):
             if self.results[field] is not None:
                 ## Process as list.
                 messages = self.results[field]
