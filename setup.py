@@ -16,9 +16,8 @@ if isdir("../.git") or isdir(".git"): # debian source tarballs don't contain .gi
     if len(items) == 3:
         version = '{}+{}'.format(items[0], items[2][1:])
     print("--> PEP-0440 version will be {}".format(version))
-    version = "1.0.0"
 else:
-    version = "1.0.0"
+    version = "undefined"
 
 if {'pytest', 'test', 'ptr'}.intersection(sys.argv):
     pytestRunner = ['pytest-runner']
@@ -55,5 +54,7 @@ setup(name='support-diagnostics',
           'Programming Language :: Python :: 3.6',
           'Programming Language :: Python :: 3.7',
           'Programming Language :: Python :: 3.8',
-          'Programming Language :: Python :: 3.9'
+          'Programming Language :: Python :: 3.9',
+          'Programming Language :: Python :: 3.11'
+
       ])
