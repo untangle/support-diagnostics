@@ -2,39 +2,41 @@
 # Arista Networks, Inc. Confidential and Proprietary.
 
 images:
-
   mfw_pkg/support-diagnostics:
     units:
-    - floor: code.arista.io/mfw/build%toolchain
-      sources:
-        - code.arista.io/mfw/build
-        - github.com/untangle/openwrt
-        - github.com/untangle/mfw_feeds
-        - github.com/untangle/support-diagnostics
-      build: | 
-        set -e
-        # copy build%toolchain's staging_dir into our source tree
-        cp -a /mfw-toolchain/staging_dir /src/github.com/untangle/openwrt/
-        # use barney-supplied feeds instead of fetching from github
-        perl -i -pe 's|^src-git mfw .+|src-link mfw /src/github.com/untangle/mfw_feeds|' /src/code.arista.io/mfw/build/feeds.conf.mfw
-        # barney sets DESTDIR to /dest, but this really confuses openwrt
-        unset DESTDIR
-        # build our package
-        cd /src/github.com/untangle/openwrt
-        /src/code.arista.io/mfw/build/build.sh -f /src -t "package/feeds/packages/python3/host/compile package/feeds/mfw/support-diagnostics/compile"
-        # copy resulting packages to destination image
-        mkdir -p /dest/mfw-packages/support-diagnostics
-        cp bin/packages/x86_64/*/* /dest/mfw-packages/support-diagnostics
-        cp bin/targets/x86/64/packages/* /dest/mfw-packages/support-diagnostics
+      - floor: code.arista.io/mfw/build%toolchain
+        sources:
+          - code.arista.io/mfw/build
+          - github.com/untangle/openwrt
+          - github.com/untangle/mfw_feeds
+          - github.com/untangle/support-diagnostics
+        quota:
+          memory: 8Gi
+          cpu: 3.5
+        build: |
+          set -e
+          # copy build%toolchain's staging_dir into our source tree
+          cp -a /mfw-toolchain/staging_dir /src/github.com/untangle/openwrt/
+          # use barney-supplied feeds instead of fetching from github
+          perl -i -pe 's|^src-git mfw .+|src-link mfw /src/github.com/untangle/mfw_feeds|' /src/code.arista.io/mfw/build/feeds.conf.mfw
+          # barney sets DESTDIR to /dest, but this really confuses openwrt
+          unset DESTDIR
+          # build our package
+          cd /src/github.com/untangle/openwrt
+          /src/code.arista.io/mfw/build/build.sh -f /src -t "package/feeds/packages/python3/host/compile package/feeds/mfw/support-diagnostics/compile"
+          # copy resulting packages to destination image
+          mkdir -p /dest/mfw-packages/support-diagnostics
+          cp bin/packages/x86_64/*/* /dest/mfw-packages/support-diagnostics
+          cp bin/targets/x86/64/packages/* /dest/mfw-packages/support-diagnostics
 
   test/mfw_pkg/support-diagnostics:
     units:
-    - image: code.arista.io/mfw/build%world
-    - image: .%mfw_pkg/support-diagnostics
+      - image: code.arista.io/mfw/build%world
+      - image: .%mfw_pkg/support-diagnostics
     finalizers:
-    - - sh
-      - -c
-      - mkdir /var/lock && opkg install --force-downgrade /mfw-packages/*/*
+      - - sh
+        - -c
+        - mkdir /var/lock && opkg install --force-downgrade /mfw-packages/*/*
 
   ################
   #
@@ -45,21 +47,24 @@ images:
   tests/internal/renovate-json5-floor:
     entry:
       mutables:
-        - /etc        # for error unable to clean up mess surrounding './etc/apache2' before installing another version: Read-only file system
-        - /usr        # for apt
-        - /var/cache  # for apt
-        - /var/lib    # for apt
-        - /var/log    # for apt
+        - /etc # for error unable to clean up mess surrounding './etc/apache2' before installing another version: Read-only file system
+        - /usr # for apt
+        - /var/cache # for apt
+        - /var/lib # for apt
+        - /var/log # for apt
     units:
-    - image: barney.ci/debian%minbase
-    - image: barney.ci/debian%network
+      - image: barney.ci/debian%minbase
+      - image: barney.ci/debian%network
 
   tests/renovate-json5:
     units:
-    - floor: .%tests/internal/renovate-json5-floor
-      sources:
-      - github.com/untangle/support-diagnostics # to get sources under stable path
-      build: |
-        apt update
-        apt install -y node-json5
-        json5 --validate /src/github.com/untangle/support-diagnostics/renovate.json5
+      - floor: .%tests/internal/renovate-json5-floor
+        sources:
+          - github.com/untangle/support-diagnostics # to get sources under stable path
+        quota:
+          memory: 500Mi
+          cpu: 1.5
+        build: |
+          apt update
+          apt install -y node-json5
+          json5 --validate /src/github.com/untangle/support-diagnostics/renovate.json5
