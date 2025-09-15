@@ -11,6 +11,9 @@ images:
         - github.com/untangle/openwrt
         - github.com/untangle/mfw_feeds
         - github.com/untangle/support-diagnostics
+      quota:
+        memory: 8Gi
+        cpu: 3.5
       build: | 
         set -e
         # copy build%toolchain's staging_dir into our source tree
@@ -59,6 +62,9 @@ images:
     - floor: .%tests/internal/renovate-json5-floor
       sources:
       - github.com/untangle/support-diagnostics # to get sources under stable path
+      quota:
+        memory: 500Mi
+        cpu: 1.5
       build: |
         apt update
         apt install -y node-json5
