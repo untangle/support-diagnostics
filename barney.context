@@ -20,7 +20,7 @@
 			"commit": "5f5f2e0f0432ea582aaccf81f3a7cbf137ba59a0"
 		},
 		"code.arista.io/mfw/build": {
-			"commit": "fb84ee2df16eae4a03dbab6336926cde7eb97c78"
+			"commit": "09342e5f62aecbc03525df8015d097854a8ce152"
 		},
 		"github.com/golang/go": {
 			"commit": "56ebf80e57db9f61981fc0636fc6419dc6f68eda"
