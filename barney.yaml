@@ -62,7 +62,7 @@ images:
         sources:
           - github.com/untangle/support-diagnostics # to get sources under stable path
         quota:
-          memory: 25Mi
+          memory: 500Mi
           cpu: 1
         build: |
           json5 --validate /src/github.com/untangle/support-diagnostics/renovate.json5
