@@ -26,7 +26,7 @@
 			"commit": "56ebf80e57db9f61981fc0636fc6419dc6f68eda"
 		},
 		"github.com/untangle/mfw_feeds": {
-			"commit": "898cc5440530cea4305c3f9bbdac9cf38ff35b07"
+			"commit": "cda87c2fd9702b0bfe2afa0345bd1e5acc5ff204"
 		},
 		"github.com/untangle/openwrt": {
 			"commit": "cdb54e08fd037f41613e8e31d3d9dbbde4dd37e8"
