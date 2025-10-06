@@ -9,7 +9,10 @@ images:
           - code.arista.io/mfw/build
           - github.com/untangle/openwrt
           - github.com/untangle/mfw_feeds
-          - github.com/untangle/support-diagnostics
+        mappings:
+          /src/github.com/untangle/support-diagnostics:
+            snapshot: code.arista.io/efw/support-diagnostics
+            mutable: true
         quota:
           memory: 8Gi
           cpu: 3.5
@@ -53,9 +56,9 @@ images:
     units:
       - floor: .%tests/internal/renovate-json5-floor
         sources:
-          - github.com/untangle/support-diagnostics # to get sources under stable path
+          - code.arista.io/efw/support-diagnostics # to get sources under stable path
         quota:
           memory: 500Mi
           cpu: 1
         build: |
-          json5 --validate /src/github.com/untangle/support-diagnostics/renovate.json5
+          json5 --validate /src/code.arista.io/efw/support-diagnostics/renovate.json5

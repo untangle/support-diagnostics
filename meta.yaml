@@ -1,4 +1,4 @@
-reponame: github.com/untangle/support-diagnostics
+reponame: code.arista.io/efw/support-diagnostics
 description: |
   Tools for support to diagnose common problems with MFW & NGFW
 users:
@@ -52,4 +52,7 @@ x-github-bridge:
         - type: push
           branch-re: ^main$
 
-epoch: 1
+ObsoleteNames:
+  - github.com/untangle/support-diagnostics
+
+epoch: 2
