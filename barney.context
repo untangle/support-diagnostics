@@ -10,13 +10,13 @@
 		"barney.ci/debian": {
 			"commit": "a3a96ffe615e6c3e132ea4a6c8819213b471e56a"
 		},
-		"code.arista.io/mfw/build": {
-			"commit": "4439199b048ae7c3ed3ef199322adfdf7b7f5475"
+		"code.arista.io/efw/build": {
+			"commit": "506bb00f3b70d93d89677daaa930e897bc7b28e1"
 		},
-		"github.com/untangle/mfw_feeds": {
+		"code.arista.io/efw/mfw_feeds": {
 			"commit": "116ebd7ed87caf56ca83a6abb5068d7fd99440c9"
 		},
-		"github.com/untangle/openwrt": {
+		"code.arista.io/efw/openwrt": {
 			"commit": "078f5a80b3cf83b88f1418be664dcbf459b118d3"
 		}
 	}
