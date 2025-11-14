@@ -17,7 +17,8 @@ images:
           memory: 8Gi
           cpu: 3.5
         build: |
-          set -e
+          set -ex
+
           # copy build%toolchain's staging_dir into our source tree
           cp -a /mfw-toolchain/staging_dir /src/code.arista.io/efw/openwrt/
           # use barney-supplied feeds instead of fetching from github

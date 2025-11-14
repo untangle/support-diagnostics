@@ -1,0 +1,32 @@
+---
+- job:
+    name: efw__support-diagnostics__test-mfw-pkg-support-diagnostics
+    description: "efw/support-diagnostics: Ensure support-diagnostics package can build"
+    parent: barney-test
+    success-message: efw/support-diagnostics package build successfully ☺️
+    failure-message: efw/support-diagnostics package build failed 🧐, review the job output
+    tags:
+      - efw
+    vars:
+      b5_image_name: test/mfw_pkg/support-diagnostics
+- job:
+    name: efw__support-diagnostics__tests-renovate-json5
+    description: "efw/support-diagnostics: Test if renovate.json5 is a valid json5 file"
+    parent: barney-test
+    success-message: Renovate.json5 is a valid JSON5 file ☺️
+    failure-message: Something looks incorrect in the JSON5 file 🧐, review the job output
+    tags:
+      - efw
+    vars:
+      b5_image_name: tests/renovate-json5
+
+- project:
+    description: "Untangle EFW (edge-firewall) Tools for support to diagnose common problems with MFW & NGFW"
+    check: &check_jobs_config
+      jobs:
+        - efw__support-diagnostics__test-mfw-pkg-support-diagnostics
+        - efw__support-diagnostics__tests-renovate-json5
+    # to enable gate job (automerge) uncomment the line below
+    # gate: *check_jobs_config
+    vars:
+      b5_repo_name: code.arista.io/efw/support-diagnostics
