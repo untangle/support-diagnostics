@@ -11,7 +11,7 @@
 			"commit": "a3a96ffe615e6c3e132ea4a6c8819213b471e56a"
 		},
 		"code.arista.io/efw/build": {
-			"commit": "506bb00f3b70d93d89677daaa930e897bc7b28e1"
+			"commit": "0e15c7cfc744e447c1f2fe2b2609591a6e5a9ac1"
 		},
 		"code.arista.io/efw/mfw_feeds": {
 			"commit": "116ebd7ed87caf56ca83a6abb5068d7fd99440c9"
