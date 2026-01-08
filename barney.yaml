@@ -2,9 +2,14 @@
 # Arista Networks, Inc. Confidential and Proprietary.
 
 images:
+  # as we product .pyc and txt we do not have dyn linking,
+  # there is no pressure on glibc / musl
   mfw_pkg/support-diagnostics:
     units:
       - floor: code.arista.io/efw/build%toolchain
+        entry:
+          mutables:
+            - /mfw-toolchain # required as we link instead of copy
         sources:
           - code.arista.io/efw/build
           - code.arista.io/efw/openwrt
@@ -14,20 +19,25 @@ images:
             snapshot: code.arista.io/efw/support-diagnostics
             mutable: true
         quota:
-          memory: 8Gi
+          memory: 4Gi
           cpu: 3.5
         build: |
           set -ex
 
-          # copy build%toolchain's staging_dir into our source tree
-          cp -a /mfw-toolchain/staging_dir /src/code.arista.io/efw/openwrt/
+          # link build%toolchain's staging_dir into our source tree
+          # we used to copy here, but we link to reduce memory footprint
+          ln -s /mfw-toolchain/staging_dir /src/code.arista.io/efw/openwrt/staging_dir
+
           # use barney-supplied feeds instead of fetching from github
           perl -i -pe 's|^src-git mfw .+|src-link mfw /src/code.arista.io/efw/mfw_feeds|' /src/code.arista.io/efw/build/feeds.conf.mfw
+
           # barney sets DESTDIR to /dest, but this really confuses openwrt
           unset DESTDIR
+
           # build our package
           cd /src/code.arista.io/efw/openwrt
           /src/code.arista.io/efw/build/build.sh -f /src -t "package/feeds/packages/python3/host/compile package/feeds/mfw/support-diagnostics/compile"
+
           # copy resulting packages to destination image
           mkdir -p /dest/mfw-packages/support-diagnostics
           cp bin/packages/x86_64/*/* /dest/mfw-packages/support-diagnostics
@@ -35,12 +45,18 @@ images:
 
   test/mfw_pkg/support-diagnostics:
     units:
-      - image: code.arista.io/efw/build%world
-      - image: .%mfw_pkg/support-diagnostics
-    finalizers:
-      - - sh
-        - -c
-        - mkdir /var/lock && opkg install --force-downgrade /mfw-packages/*/*
+      - floor: code.arista.io/efw/build%world
+        sources: []
+        mappings:
+          /src/support-diagnostics:
+            snapshot: .%mfw_pkg/support-diagnostics
+            mutable: false
+        build: |
+          mkdir /var/lock
+          opkg install --force-downgrade /src/support-diagnostics/mfw-packages/*/*
+
+          ls /usr/bin/support-diagnostics
+          file support-diagnostics | grep "Python script"
 
   ################
   #
