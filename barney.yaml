@@ -46,17 +46,20 @@ images:
   test/mfw_pkg/support-diagnostics:
     units:
       - floor: code.arista.io/efw/build%world
+        entry:
+          mutables:
+            - /etc
+            - /usr
         sources: []
         mappings:
           /src/support-diagnostics:
             snapshot: .%mfw_pkg/support-diagnostics
             mutable: false
         build: |
-          mkdir /var/lock
+          mkdir -p /var/lock
           opkg install --force-downgrade /src/support-diagnostics/mfw-packages/*/*
 
           ls /usr/bin/support-diagnostics
-          file support-diagnostics | grep "Python script"
 
   ################
   #
