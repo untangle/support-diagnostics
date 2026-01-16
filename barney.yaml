@@ -13,7 +13,7 @@ images:
         sources:
           - code.arista.io/efw/build
           - code.arista.io/efw/openwrt
-          - code.arista.io/efw/mfw_feeds
+          - code.arista.io/efw/feeds
         mappings:
           /src/github.com/untangle/support-diagnostics:
             snapshot: code.arista.io/efw/support-diagnostics
@@ -29,7 +29,7 @@ images:
           ln -s /mfw-toolchain/staging_dir /src/code.arista.io/efw/openwrt/staging_dir
 
           # use barney-supplied feeds instead of fetching from github
-          perl -i -pe 's|^src-git mfw .+|src-link mfw /src/code.arista.io/efw/mfw_feeds|' /src/code.arista.io/efw/build/feeds.conf.mfw
+          perl -i -pe 's|^src-git mfw .+|src-link mfw /src/code.arista.io/efw/feeds|' /src/code.arista.io/efw/build/feeds.conf.mfw
 
           # barney sets DESTDIR to /dest, but this really confuses openwrt
           unset DESTDIR
