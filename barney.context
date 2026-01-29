@@ -14,7 +14,7 @@
 			"commit": "0e15c7cfc744e447c1f2fe2b2609591a6e5a9ac1"
 		},
 		"code.arista.io/efw/feeds": {
-			"commit": "0d8079d1e365dd17d0fb616c4f307fcf1df00447"
+			"commit": "77ca187df4a0bd001440aeff3e4f931042b3daed"
 		},
 		"code.arista.io/efw/openwrt": {
 			"commit": "7558cba5005c2fe9064dc4659d9d78a1b05daa25"
