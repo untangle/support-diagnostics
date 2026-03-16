@@ -16,7 +16,7 @@ env:
       PKGTOOLS_COMMIT: origin/${TRAVIS_BRANCH}
       UPLOAD: scp
   jobs:
-    - REPOSITORY: bullseye
+    - REPOSITORY: bookworm
 
 before_install:
 - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
