@@ -9,7 +9,10 @@ from os.path import isdir
 
 if isdir("../.git") or isdir(".git"): # debian source tarballs don't contain .git
     version_cmd = "git describe --tags --always --long"
-    version = check_output(version_cmd.split(" ")).decode().strip()
+    try:
+        version = check_output(version_cmd.split(" "), stderr=open('/dev/null', 'w')).decode().strip()
+    except Exception:
+        version = "0.0.0"
     print("Working on git version {}".format(version))
     # enforce https://www.python.org/dev/peps/pep-0440
     items = version[1:].split('-')
