@@ -5,16 +5,16 @@
 			"commit": "4dcb7edeadccedcf860f06bfe02d77f93d6953a9"
 		},
 		"barney.ci/barneyfile": {
-			"commit": "75da1d8497a53048107fe35e66577ae364ccd6c5"
+			"commit": "5d6875f921e80df425bd793614c60fa9b7c3bc1d"
 		},
 		"barney.ci/debian": {
 			"commit": "db84751b9add1cb0fc2933cc67cabc61ae08308e"
 		},
 		"code.arista.io/efw/build": {
-			"commit": "0e15c7cfc744e447c1f2fe2b2609591a6e5a9ac1"
+			"commit": "9b4edfa1fcd71fc21d7be10b665934fd9eedb8e5"
 		},
 		"code.arista.io/efw/feeds": {
-			"commit": "d075f19c0c000fc5f05ec6416d8794a44c714408"
+			"commit": "9b802f0ad7057cfe57ce25f1dbe2768791f5f97e"
 		},
 		"code.arista.io/efw/openwrt": {
 			"commit": "7558cba5005c2fe9064dc4659d9d78a1b05daa25"
