@@ -1,6 +1,6 @@
 {
     "automergeSchedule": ["at any time"],
-    commitMessage: "{{{commitMessagePrefix}}} {{{commitMessageAction}}} {{{commitMessageTopic}}} {{{commitMessageExtra}}} {{{commitMessageSuffix}}} [skip travis]",
+    commitMessage: "NGFW-15905 {{{commitMessagePrefix}}} {{{commitMessageAction}}} {{{commitMessageTopic}}} {{{commitMessageExtra}}} {{{commitMessageSuffix}}} [skip travis]",
 
     packageRules: [
         {
@@ -8,7 +8,7 @@
             "matchPackageNames": ["code.arista.io/infra/barney/barnzilla-repos"],
             "automergeSchedule": ["* 0-2 * * *"],
             "timezone": "Etc/UTC",
-            commitMessage: "{{{commitMessagePrefix}}} {{{commitMessageAction}}} {{{commitMessageTopic}}} {{{commitMessageExtra}}} {{{commitMessageSuffix}}} [skip travis]",
+            commitMessage: "NGFW-15905 {{{commitMessagePrefix}}} {{{commitMessageAction}}} {{{commitMessageTopic}}} {{{commitMessageExtra}}} {{{commitMessageSuffix}}} [skip travis]",
         }
     ]
 }
