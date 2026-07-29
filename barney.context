@@ -2,10 +2,10 @@
 	"version": 1,
 	"repomap": {
 		"barney.ci/alpine": {
-			"commit": "4dcb7edeadccedcf860f06bfe02d77f93d6953a9"
+			"commit": "052b61532a2df69c1d99db45d27c9ec7899530f3"
 		},
 		"barney.ci/barneyfile": {
-			"commit": "5d6875f921e80df425bd793614c60fa9b7c3bc1d"
+			"commit": "6c7d1024faf63e3110305353563c012ac19ec410"
 		},
 		"barney.ci/debian": {
 			"commit": "db84751b9add1cb0fc2933cc67cabc61ae08308e"
@@ -14,7 +14,7 @@
 			"commit": "9b4edfa1fcd71fc21d7be10b665934fd9eedb8e5"
 		},
 		"code.arista.io/efw/feeds": {
-			"commit": "9b802f0ad7057cfe57ce25f1dbe2768791f5f97e"
+			"commit": "9b41406bc17f8f478100da32cbd7ad062d6e9bf6"
 		},
 		"code.arista.io/efw/openwrt": {
 			"commit": "7558cba5005c2fe9064dc4659d9d78a1b05daa25"
