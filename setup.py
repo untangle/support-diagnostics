@@ -9,12 +9,21 @@ from os.path import isdir
 
 if isdir("../.git") or isdir(".git"): # debian source tarballs don't contain .git
     version_cmd = "git describe --tags --always --long"
-    version = check_output(version_cmd.split(" ")).decode().strip()
+    try:
+        version = check_output(version_cmd.split(" "), stderr=open('/dev/null', 'w')).decode().strip()
+    except Exception:
+        version = "0.0.0"
     print("Working on git version {}".format(version))
     # enforce https://www.python.org/dev/peps/pep-0440
     items = version[1:].split('-')
     if len(items) == 3:
         version = '{}+{}'.format(items[0], items[2][1:])
+    elif len(items) > 3:
+        import re
+        m = re.search(r'(\d+\.\d+\.\d+)', version)
+        base = m.group(1) if m else '0.0.0'
+        commit = items[-1][1:] if items[-1].startswith('g') else items[-1]
+        version = '{}+{}'.format(base, commit)
     print("--> PEP-0440 version will be {}".format(version))
 else:
     version = "undefined"
