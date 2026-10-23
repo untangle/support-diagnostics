@@ -10,6 +10,12 @@ images:
         entry:
           mutables:
             - /mfw-toolchain # required as we link instead of copy
+          network:
+            enabled: true
+            firewall:
+              # Accessed domains (66):  alpha.gnu.org., build.openvpn.net., ...  ,www.tcpdump.org.
+              allow: ["fwgroup:any"]
+              deny: ["fwgroup:any"]
         sources:
           - code.arista.io/efw/build
           - code.arista.io/efw/openwrt
@@ -50,6 +56,8 @@ images:
           mutables:
             - /etc
             - /usr
+          network:
+            enabled: false
         sources: []
         mappings:
           /src/support-diagnostics:
@@ -80,5 +88,6 @@ images:
         quota:
           memory: 500Mi
           cpu: 1
+        entry: {network: {enabled: false}}
         build: |
           json5 --validate /src/code.arista.io/efw/support-diagnostics/renovate.json5
